@@ -1,7 +1,7 @@
 <template>
-  <main>
+  <div>
     <ContentDoc class="prose" />
-  </main>
+  </div>
 </template>
 
 <script lang="ts" setup>
