@@ -19,5 +19,10 @@ export default defineNuxtConfig({
       ],
       plugins: [require('@tailwindcss/typography'), require('daisyui')]
     }
+  },
+  content: {
+    navigation: {
+      fields: ['description', 'author', 'publishedAt']
+    }
   }
 });
