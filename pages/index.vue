@@ -25,16 +25,17 @@
         >
           Filter
         </label>
+        {{ duration }} min
       </div>
       <div class="drawer-side">
         <div class="px-4 py-2">
           <label
-          for="filter-panel"
-          aria-label="close sidebar"
-          class="drawer-overlay"
-        >
-          FILTER BY
-        </label>
+            for="filter-panel"
+            aria-label="close sidebar"
+            class="drawer-overlay"
+          >
+            FILTER BY TAG
+          </label>
         </div>
 
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
@@ -48,9 +49,14 @@
 </template>
 
 <script lang="ts" setup>
-const { data: navigation } = await useAsyncData('navigation', () =>
-  fetchContentNavigation()
+const { data } = await useAsyncData('sample', () =>
+  queryContent('sample').find()
 );
+
+const duration = ref(0);
+if (data.value) {
+  duration.value = countReadingTime(data.value);
+}
 </script>
 
 <style></style>
