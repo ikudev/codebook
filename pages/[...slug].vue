@@ -48,9 +48,7 @@ const { data: docs } = await useAsyncData(docRoot, () =>
 );
 
 const intro = computed(() => docs.value?.[0]);
-const chapters = computed(
-  () => docs.value?.slice(1) || []
-);
+const chapters = computed(() => docs.value?.slice(1) || []);
 
 const currentPos = computed(() => {
   return (
@@ -68,7 +66,7 @@ if (docs.value) {
 }
 
 onMounted(() => {
-  if (!docName || docName === 'index') {
+  if (currentPos.value <= 0) {
     const router = useRouter();
     nextTick(() => {
       router.push(chapters.value?.[0]?._path || '/');
