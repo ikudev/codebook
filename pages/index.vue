@@ -25,7 +25,6 @@
         >
           Filter
         </label>
-        {{ duration }} min
       </div>
       <div class="drawer-side">
         <div class="px-4 py-2">
@@ -48,15 +47,6 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-const { data } = await useAsyncData('sample', () =>
-  queryContent('sample').find()
-);
-
-const duration = ref(0);
-if (data.value) {
-  duration.value = countReadingTime(data.value);
-}
-</script>
+<script lang="ts" setup></script>
 
 <style></style>

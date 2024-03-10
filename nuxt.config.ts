@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   },
   content: {
     navigation: {
-      fields: ['description', 'author', 'publishedAt']
+      fields: ['description', 'author', 'updatedAt']
     }
   }
 });
