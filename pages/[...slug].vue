@@ -22,7 +22,6 @@
         >
           <Icon name="mdi:menu" />
         </label>
-        {{ index }}
         <ContentDoc class="prose" />
       </div>
       <div class="drawer-side">
@@ -43,30 +42,38 @@
 
 <script lang="ts" setup>
 const route = useRoute();
-const [docRoot, docName] = route.params.slug[0];
+const [docRoot, docName] = route.params.slug;
 const { data: docs } = await useAsyncData(docRoot, () =>
   queryContent(docRoot).find()
 );
 
-if (!docName) {
-  const router = useRouter();
-  router.push("/");
-}
-
 const intro = computed(() => docs.value?.[0]);
 const chapters = computed(
-  () => docs.value?.filter((doc) => !doc._partial) || []
+  () => docs.value?.slice(1) || []
 );
+
+const currentPos = computed(() => {
+  return (
+    docs.value?.findIndex((doc) => {
+      return doc._path === route.path;
+    }) || 0
+  );
+});
 
 const remainingTime = ref(0);
 if (docs.value) {
-  remainingTime.value = countReadingTime(docs.value);
+  remainingTime.value = countReadingTime(
+    docs.value.slice(currentPos.value <= 1 ? 0 : currentPos.value)
+  );
 }
 
-const index = computed(() => {
-  return chapters.value.findIndex((chapter) => {
-    return chapter._path === route.path;
-  });
+onMounted(() => {
+  if (!docName || docName === 'index') {
+    const router = useRouter();
+    nextTick(() => {
+      router.push(chapters.value?.[0]?._path || '/');
+    });
+  }
 });
 </script>
 
