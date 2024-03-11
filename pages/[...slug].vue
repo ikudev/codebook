@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-50">
+  <div class="drawer lg:drawer-open bg-gray-50">
     <div
-      class="flex justify-between items-center px-2 bg-gray-300 text-gray-800"
+      class="flex justify-between items-center px-2 bg-gray-300 text-gray-800 fixed w-full"
     >
       <div class="flex items-center gap-1 py-4">
         <NuxtLink to="/"><Icon name="mdi:arrow-left" /></NuxtLink>
@@ -13,29 +13,30 @@
         <span>{{ remainingTime }} mins remaining</span>
       </div>
     </div>
-    <div class="drawer lg:drawer-open">
-      <input id="contents-panel" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content">
-        <label
-          for="contents-panel"
-          class="btn btn-primary drawer-button lg:hidden"
-        >
-          <Icon name="mdi:menu" />
-        </label>
-        <ContentDoc class="prose" />
+
+    <input id="contents-panel" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content mt-20">
+      <label
+        for="contents-panel"
+        class="btn btn-primary drawer-button lg:hidden"
+      >
+        <Icon name="mdi:menu" />
+      </label>
+      <div>
+        <ContentDoc class="prose p-4 mx-auto" />
       </div>
-      <div class="drawer-side">
-        <label
-          for="contents-panel"
-          aria-label="close sidebar"
-          class="drawer-overlay"
-        ></label>
-        <ul class="menu p-4 w-80 min-h-full">
-          <li v-for="item in chapters">
-            <NuxtLink :to="item._path">{{ item.title }}</NuxtLink>
-          </li>
-        </ul>
-      </div>
+    </div>
+    <div class="drawer-side top-16">
+      <label
+        for="contents-panel"
+        aria-label="close sidebar"
+        class="drawer-overlay"
+      ></label>
+      <ul class="menu p-4 w-80">
+        <li v-for="item in chapters">
+          <NuxtLink :to="item._path">{{ item.title }}</NuxtLink>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
