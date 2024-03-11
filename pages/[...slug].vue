@@ -18,21 +18,37 @@
     <div class="drawer-content mt-20">
       <label
         for="contents-panel"
-        class="btn btn-primary drawer-button lg:hidden"
+        class="btn drawer-button lg:hidden sticky top-16 ml-4"
       >
         <Icon name="mdi:menu" />
       </label>
-      <div>
-        <ContentDoc class="prose p-4 mx-auto" />
+      <ContentDoc class="prose p-4 mx-auto" />
+      <div
+        class="sticky bottom-8 flex justify-between items-center mx-8 lg:mx-32"
+      >
+        <NuxtLink
+          class="btn btn-info btn-outline opacity-75"
+          :class="{ invisible: isBeginning }"
+          :to="prev?._path || route.path"
+        >
+          Back
+        </NuxtLink>
+        <NuxtLink
+          class="btn btn-info btn-outline opacity-75"
+          :class="{ invisible: isEnding }"
+          :to="next?._path || route.path"
+        >
+          Next
+        </NuxtLink>
       </div>
     </div>
-    <div class="drawer-side top-16">
+    <div class="drawer-side">
       <label
         for="contents-panel"
         aria-label="close sidebar"
         class="drawer-overlay"
       ></label>
-      <ul class="menu p-4 w-80">
+      <ul class="menu px-4 sticky top-16">
         <li v-for="item in chapters">
           <NuxtLink :to="item._path">{{ item.title }}</NuxtLink>
         </li>
@@ -66,6 +82,13 @@ if (docs.value) {
   );
 }
 
+const isBeginning = computed(() => currentPos.value <= 1);
+const isEnding = computed(() => currentPos.value >= chapters.value.length);
+
+const [prev, next] = await queryContent()
+  .only(['_path'])
+  .findSurround(route.path);
+
 onMounted(() => {
   if (currentPos.value <= 0) {
     const router = useRouter();
@@ -76,4 +99,8 @@ onMounted(() => {
 });
 </script>
 
-<style></style>
+<style scoped>
+.nav-btn {
+  @apply btn btn-info btn-outline opacity-75;
+}
+</style>
