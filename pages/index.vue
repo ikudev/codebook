@@ -9,7 +9,7 @@
         </div>
         <h1 class="text-3xl font-bold">Codebook</h1>
       </div>
-      <p class="w-2/5 mx-auto mt-4">
+      <p class="w-4/5 lg:w-2/5 mx-auto mt-4">
         Codebook is your online guide to coding skills. Learn from a variety of
         tutorials on different topics, languages, and frameworks. Check out
         Codebook today and start coding!
@@ -17,14 +17,23 @@
     </header>
     <main class="drawer lg:drawer-open">
       <input id="filter-panel" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content flex flex-col items-center justify-center">
-        <!-- Page content here -->
+      <div class="drawer-content flex flex-col items-center gap-4 p-4">
         <label
           for="filter-panel"
           class="btn btn-primary drawer-button lg:hidden"
         >
           Filter
         </label>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <ArticleCard
+            v-for="nav in navigation"
+            :key="nav.title"
+            :title="nav.title"
+            :description="nav.description"
+            :updatedAt="nav.updatedAt"
+            :link="nav._path"
+          />
+        </div>
       </div>
       <div class="drawer-side">
         <div class="px-4 py-2">
@@ -33,7 +42,7 @@
             aria-label="close sidebar"
             class="drawer-overlay"
           >
-            FILTER BY TAG
+            Choose a Tag
           </label>
         </div>
 
@@ -47,6 +56,10 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const { data: navigation } = await useAsyncData('navigation', () =>
+  fetchContentNavigation()
+);
+</script>
 
 <style></style>
