@@ -2,7 +2,9 @@
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">{{ title }}</h2>
-      <small class="text-right text-gray-500">Updated {{ updatedAt }}</small>
+      <small class="text-right text-gray-500">
+        Updated at {{ $dayjs(updatedAt).format('YYYY/MM/DD') }}
+      </small>
       <p>{{ displayDescription }}</p>
       <div class="card-actions flex-row-reverse justify-between items-center">
         <NuxtLink class="btn btn-primary" :to="link">Start</NuxtLink>
