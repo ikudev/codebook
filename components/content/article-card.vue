@@ -6,10 +6,14 @@
       <p>{{ displayDescription }}</p>
       <div class="card-actions flex-row-reverse justify-between items-center">
         <NuxtLink class="btn btn-primary" :to="link">Start</NuxtLink>
-        <div class="w-1/2 flex items-center gap-1">
-          <div class="badge badge-ghost" v-for="(tag, i) in tags" :key="i">
+        <div class="w-1/2 flex flex-wrap items-center gap-1">
+          <span
+            class="badge badge-ghost text-sm"
+            v-for="(tag, i) in tags"
+            :key="i"
+          >
             {{ tag }}
-          </div>
+          </span>
         </div>
       </div>
     </div>

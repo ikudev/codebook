@@ -26,12 +26,13 @@
         </label>
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
           <ArticleCard
-            v-for="nav in navigation"
-            :key="nav.title"
-            :title="nav.title"
-            :description="nav.description"
-            :updatedAt="nav.updatedAt"
-            :link="nav._path"
+            v-for="article in filteredArticles"
+            :key="article.title"
+            :title="article.title"
+            :description="article.description"
+            :updatedAt="article.updatedAt"
+            :link="article._path"
+            :tags="article.tags?.split('|') || []"
           />
         </div>
       </div>
@@ -42,14 +43,31 @@
             aria-label="close sidebar"
             class="drawer-overlay"
           >
-            Choose a Tag
+            Filter by Tag
           </label>
         </div>
 
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          <!-- Sidebar content here -->
-          <li><a>Sidebar Item 1</a></li>
-          <li><a>Sidebar Item 2</a></li>
+          <li v-for="(tag, i) in allTags" :key="i">
+            <div>
+              <input
+                type="checkbox"
+                class="checkbox"
+                :id="`tag-${i}`"
+                :checked="selectedTags.includes(tag)"
+                @change="
+                  () => {
+                    if (selectedTags.includes(tag)) {
+                      selectedTags = selectedTags.filter((t) => t !== tag);
+                    } else {
+                      selectedTags = [...selectedTags, tag];
+                    }
+                  }
+                "
+              />
+              <label :for="`tag-${i}`">{{ tag }}</label>
+            </div>
+          </li>
         </ul>
       </div>
     </main>
@@ -60,6 +78,28 @@
 const { data: navigation } = await useAsyncData('navigation', () =>
   fetchContentNavigation()
 );
+
+const allTags = computed(() =>
+  useChain(navigation.value)
+    .map((e) => (e.tags as string)?.split('|') || [])
+    .flatten()
+    .uniq()
+    .value()
+);
+
+const selectedTags = ref<string[]>([]);
+
+const filteredArticles = computed(() => {
+  if (isEmpty(selectedTags.value)) {
+    return navigation.value;
+  }
+
+  return (
+    navigation.value?.filter((nav) =>
+      selectedTags.value.some((tag) => nav.tags?.includes(tag))
+    ) || []
+  );
+});
 </script>
 
 <style></style>
