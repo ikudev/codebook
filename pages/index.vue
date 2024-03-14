@@ -24,7 +24,7 @@
         >
           Filter
         </label>
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ArticleCard
             v-for="article in filteredArticles"
             :key="article.title"
@@ -37,15 +37,13 @@
         </div>
       </div>
       <div class="drawer-side">
-        <div class="px-4 py-2">
-          <label
-            for="filter-panel"
-            aria-label="close sidebar"
-            class="drawer-overlay"
-          >
-            Filter by Tag
-          </label>
-        </div>
+        <label
+          for="filter-panel"
+          aria-label="close sidebar"
+          class="drawer-overlay text-gray-500 px-2"
+        >
+          Filter by Tag
+        </label>
 
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           <li v-for="(tag, i) in allTags" :key="i">
