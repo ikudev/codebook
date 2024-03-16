@@ -18,12 +18,26 @@
     <main class="drawer lg:drawer-open">
       <input id="filter-panel" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content flex flex-col items-center gap-4 p-4">
-        <label
-          for="filter-panel"
-          class="btn btn-primary drawer-button lg:hidden"
-        >
-          Filter
-        </label>
+        <div class="flex justify-center items-center gap-2 w-full">
+          <label
+            class="input input-bordered flex items-center gap-2 w-full lg:w-1/2"
+          >
+            <input
+              type="text"
+              placeholder="Type to search..."
+              class="grow"
+              v-model="keyword"
+            />
+            <Icon name="mdi:magnify" size="24px" />
+          </label>
+          <label
+            for="filter-panel"
+            class="btn btn-primary drawer-button lg:hidden"
+          >
+            Filter
+          </label>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ArticleCard
             v-for="article in filteredArticles"
@@ -86,16 +100,21 @@ const allTags = computed(() =>
 );
 
 const selectedTags = ref<string[]>([]);
+const keyword = ref('');
 
 const filteredArticles = computed(() => {
-  if (isEmpty(selectedTags.value)) {
-    return navigation.value;
-  }
-
   return (
-    navigation.value?.filter((nav) =>
-      selectedTags.value.some((tag) => nav.tags?.includes(tag))
-    ) || []
+    navigation.value?.filter((nav) => {
+      const tags = (nav.tags as string)?.split('|') || [];
+      const isTagMatch = isEmpty(selectedTags.value)
+        ? true
+        : selectedTags.value.every((tag) => tags.includes(tag));
+      const isKeywordMatch = isEmpty(keyword.value)
+        ? true
+        : nav.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
+          nav.description.toLowerCase().includes(keyword.value.toLowerCase());
+      return isTagMatch && isKeywordMatch;
+    }) || []
   );
 });
 </script>

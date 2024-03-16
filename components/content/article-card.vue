@@ -10,7 +10,7 @@
         <NuxtLink class="btn btn-primary" :to="link">Start</NuxtLink>
         <div class="w-1/2 flex flex-wrap items-center gap-1">
           <span
-            class="badge badge-ghost text-sm"
+            class="badge badge-ghost text-xs"
             v-for="(tag, i) in tags"
             :key="i"
           >
