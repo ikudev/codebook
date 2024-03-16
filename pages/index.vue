@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="mt-4 text-center">
+    <header class="my-8 text-center">
       <div class="flex justify-center items-center gap-4">
         <div class="avatar">
           <div class="w-16 rounded-full">

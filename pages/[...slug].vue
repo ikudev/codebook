@@ -22,7 +22,7 @@
       >
         <Icon name="mdi:menu" />
       </label>
-      <ContentDoc class="prose p-4 mx-auto" />
+      <ContentDoc class="prose p-4 mx-auto rounded-xl shadow-xl" />
       <div
         class="sticky bottom-8 flex justify-between items-center mx-8 lg:mx-32"
       >
