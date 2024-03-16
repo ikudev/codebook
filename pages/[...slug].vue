@@ -22,7 +22,15 @@
       >
         <Icon name="mdi:menu" />
       </label>
-      <ContentDoc class="prose p-4 mx-auto rounded-xl shadow-xl" />
+      <Cover
+        v-if="currentPos === 1 && intro"
+        class="mx-auto prose border border-solid p-4"
+        :title="intro.title"
+        :description="intro.description"
+        :updatedAt="intro.updatedAt"
+        :author="intro.author"
+      />
+      <ContentDoc class="prose p-4 mx-auto mt-4 rounded-lg shadow-lg" />
       <div
         class="sticky bottom-8 flex justify-between items-center mx-8 lg:mx-32"
       >

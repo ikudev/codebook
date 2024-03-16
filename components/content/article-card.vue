@@ -3,7 +3,7 @@
     <div class="card-body">
       <h2 class="card-title">{{ title }}</h2>
       <small v-if="updatedAt" class="text-right text-gray-500">
-        Updated at {{ format(updatedAt, 'yyyy/MM/dd') }}
+        Updated at {{ useFormatDate(updatedAt) }}
       </small>
       <p>{{ displayDescription }}</p>
       <div class="card-actions flex-row-reverse justify-between items-center">
@@ -23,8 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-import { format } from 'date-fns';
-
 const props = defineProps({
   title: String,
   description: String,
